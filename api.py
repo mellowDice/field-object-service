@@ -3,6 +3,8 @@ eventlet.monkey_patch()
 
 from flask import Flask, request
 import requests
+import traceback
+
 import eventlet.wsgi
 
 from create_terrain_objects import save_terrain, create_or_update_terrain_object, get_all_food, get_all_obstacles
@@ -42,6 +44,18 @@ def save_landscape():
     save_terrain(height, width, request.json["terrain"])
     return 'Ok'
 
+    
+# error handling
+@socketio.on_error()    
+def error_handler(e):
+    print('error', e, traceback.format_exc())
+
+    pass
+
+@socketio.on_error_default
+def default_error_handler(e):
+    print('error', e, traceback.format_exc())
+    pass
 
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('', 7001)), app, debug=True)
