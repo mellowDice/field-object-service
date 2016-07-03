@@ -46,13 +46,13 @@ def save_landscape():
 
     
 # error handling
-@socketio.on_error()    
+@app.on_error()    
 def error_handler(e):
     print('error', e, traceback.format_exc())
 
     pass
 
-@socketio.on_error_default
+@app.on_error_default
 def default_error_handler(e):
     print('error', e, traceback.format_exc())
     pass
