@@ -12,10 +12,11 @@ def save_terrain(rows, columns, landscape):
   terrain = landscape
   height = rows
   width = columns
+  print('save terrain', len(terrain), landscape)
 
 def random_coordinates():
   global terrain, height
-  print('terrain exists before random coordinates called', terrain)
+  print('terrain exists before random coordinates called')
   coordinates = np.random.randint(height, size=2).tolist()
   x = coordinates[0]
   y = coordinates[1]

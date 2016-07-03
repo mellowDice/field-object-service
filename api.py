@@ -9,13 +9,23 @@ from create_terrain_objects import save_terrain, create_or_update_terrain_object
 
 app = Flask(__name__)
 
+# microservices_urls = {
+#   'socket':'http://localhost:9000',
+#   'terrain': 'http://159.203.226.234',
+#   'field_objects': 'http://192.241.215.101', 
+# }
+microservices_urls = {
+    'socket': 'http://104.236.155.241',
+    'terrain': 'http://159.203.226.234:7000',
+    'field_objects': 'http://192.241.215.101:7001',
+}
 @app.route('/')
 def test_connect():
     return "connected to objects service"
 
 @app.route('/terrain_objects', methods=['GET'])
 def get_terrain_objects():
-    requests.post('http://localhost:9000/send_field_objects', json ={'food':get_all_food(), 'obstacles': get_all_obstacles()})
+    requests.post(microservices_urls["socket"]+'/send_field_objects', json ={'food':get_all_food(), 'obstacles': get_all_obstacles()})
     return 'OK'
 
 @app.route('/update_object', methods=['GET'])
