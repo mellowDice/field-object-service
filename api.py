@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 # microservices_urls = {
 #   'socket':'http://localhost:9000',
-#   'terrain': 'http://159.203.226.234',
-#   'field_objects': 'http://192.241.215.101', 
+#   'terrain': 'http://localhost:7000',
+#   'field_objects': 'http://localhost:7001', 
 # }
 microservices_urls = {
     'socket': 'http://104.236.155.241',
