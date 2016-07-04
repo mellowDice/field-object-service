@@ -46,16 +46,14 @@ def save_landscape():
 
     
 # error handling
-@app.on_error()    
-def error_handler(e):
-    print('error', e, traceback.format_exc())
-
-    pass
-
-@app.on_error_default
-def default_error_handler(e):
-    print('error', e, traceback.format_exc())
-    pass
+@app.errorhandler(500)
+def internal_error(exception):
+    """Show traceback in the browser when running a flask app on a production server.
+    By default, flask does not show any useful information when running on a production server.
+    By adding this view, we output the Python traceback to the error 500 page.
+    """
+    trace = traceback.format_exc()
+    return("<pre>" + trace + "</pre>"), 500
 
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('', 7001)), app, debug=True)
