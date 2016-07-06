@@ -16,12 +16,11 @@ def save_terrain(rows, columns, landscape):
 
 def random_coordinates():
   global terrain, height
-  print('terrain exists before random coordinates called')
   coordinates = np.random.randint(height, size=2).tolist()
   x = coordinates[0]
   y = coordinates[1]
-  z = terrain[coordinates[0]][coordinates[1]]
-  return {'x': x, 'y': y, 'z': z}
+  # z = terrain[coordinates[0]][coordinates[1]]
+  return {'x': x, 'y': y}
 
 def create_or_update_terrain_object(type, i):
   global food, obstacles
