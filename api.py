@@ -30,6 +30,7 @@ def update_object():
     objId = request.args.get('id')
     objType = request.args.get('type')
     data = create_or_update_terrain_object(objType, objId)
+    requests.post(app.config['DB_URL'] + '/' + objType + '/add', json={'id': objId})
     return data
 
 @app.route('/store_terrain', methods=['POST'])
