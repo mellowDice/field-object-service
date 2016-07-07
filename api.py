@@ -21,10 +21,10 @@ def test_connect():
     return "connected to objects service"
 
 ## Remove this once everyone is updated
-# @app.route('/terrain_objects', methods=['GET'])
-# def get_terrain_objects():
-#     requests.post('http://localhost:9000/send_field_objects', json ={'food':get_all_food(), 'obstacles': get_all_obstacles()})
-#     return 'OK'
+@app.route('/terrain_objects', methods=['GET'])
+def get_terrain_objects():
+    requests.post('http://localhost:9000/send_field_objects', json ={'food':get_all_food(), 'obstacles': get_all_obstacles()})
+    return 'OK'
 
 @app.route('/update_object', methods=['GET'])
 def update_object():
