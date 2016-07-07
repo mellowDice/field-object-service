@@ -33,11 +33,12 @@ def get_terrain_objects():
 
 @app.route('/update_object', methods=['GET'])
 def update_object():
+    print('Updating!')
     objId = request.args.get('id')
     objType = request.args.get('type')
     obj = random_coordinates(objId)
     print(objId, objType, obj)
-    requests.post(app.config['DB_URL'] + '/' + objType + '/add', json={str(objType):obj})
+    requests.post(app.config['DB_URL'] + '/' + objType + '/add', json={str(objType):[obj]})
     return jsonify(obj)
 
 ######## ----- Helper Functions ------- ########
@@ -51,6 +52,7 @@ def get_all_food():
             coordinates = random_coordinates(i)
             food.append(coordinates)
             requests.post(app.config['DB_URL'] + '/food/add', json={'food': [coordinates]})
+    print(food)
     return food
 
 def get_all_obstacles():
