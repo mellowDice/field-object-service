@@ -33,6 +33,7 @@ def get_terrain_objects():
 
 @app.route('/update_object', methods=['GET'])
 def update_object():
+    print('Updating!')
     objId = request.args.get('id')
     objType = request.args.get('type')
     obj = random_coordinates(objId)
