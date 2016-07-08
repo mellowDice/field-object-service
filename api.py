@@ -18,9 +18,10 @@ print(app.config['DB_URL'] + '/' + 'food' + '/add' + str(3))
 
 height = 250
 width = 250
+count = 1
 
 @app.route('/')
-def test_connect():
+def test_connect(): 
     return "connected to objects service"
 
 @app.route('/terrain_objects', methods=['GET'])
@@ -40,6 +41,26 @@ def update_object():
     print(objId, objType, obj)
     requests.post(app.config['DB_URL'] + '/' + objType + '/add', json={str(objType):[obj]})
     return jsonify(obj)
+
+@app.route('/get_pi_food', methods=['GET'])
+def get_pi_food():
+    global count
+    x = float(request.args.get('x'))
+    z = float(request.args.get('z'))
+    print('Getting pi food!', x, z)
+    foodCircle = []
+    size = 10
+    if count > 50:
+        count = 1
+    for i in range(size):
+        foodCircle.append({'x': x + (np.sin(np.deg2rad(360 * i /size)) * 10),
+                           'z': z + (np.cos(np.deg2rad(360 * i /size)) * 10),
+                           'id': count + 100})
+        count = count + 1
+    # d = {'x': x , 'z': z }
+    print(foodCircle)
+    return jsonify({'food':foodCircle})
+
 
 ######## ----- Helper Functions ------- ########
 
