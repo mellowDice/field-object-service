@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 # Absolute path to the configuraiton file
 app.config.from_envvar('APP_CONFIG_FILE')
-print(app.config['DB_URL'] + '/' + 'food' + '/add' + str(3))
+# print(app.config['DB_URL'] + '/' + 'food' + '/add' + str(3))
 
 height = 250
 width = 250
@@ -75,11 +75,10 @@ def get_all_food():
     food = requests.get(app.config['DB_URL'] + '/food/get_all').json()
     print('food', food)
     if len(food) == 0:
-        for i in range(100):
+        for i in range(1000):
             coordinates = random_coordinates(i)
             food.append(coordinates)
             requests.post(app.config['DB_URL'] + '/food/add', json={'food': [coordinates]})
-    print(food)
     return food
 
 def get_all_obstacles():
