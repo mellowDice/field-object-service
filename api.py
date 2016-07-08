@@ -7,6 +7,7 @@ import traceback
 
 import eventlet.wsgi
 import numpy as np
+import math
 
 # from create_terrain_objects import save_terrain, create_or_update_terrain_object, get_all_food, get_all_obstacles
 
@@ -19,7 +20,6 @@ print(app.config['DB_URL'] + '/' + 'food' + '/add' + str(3))
 height = 250
 width = 250
 
-maxFood = 100
 count = 1
 
 @app.route('/')
@@ -47,18 +47,22 @@ def update_object():
 @app.route('/get_pi_food', methods=['GET'])
 def get_pi_food():
     global count
-    global maxFood
     x = float(request.args.get('x'))
     z = float(request.args.get('z'))
+    player_id = str(request.args.get('player_id'))
     print('Getting pi food!', x, z)
     foodCircle = []
-    size = 10
+    print(player_id)
+    player = requests.get(app.config['DB_URL'] + '/players/' + player_id).json()[0]
+    print(player)
+    size = int(float(player['mass']))
+    print(size)
     if count > 50:
         count = 1
     for i in range(size):
         foodCircle.append({'x': x + (np.sin(np.deg2rad(360 * i /size)) * 10),
                            'z': z + (np.cos(np.deg2rad(360 * i /size)) * 10),
-                           'id': count + maxFood})
+                           'id': -count})
         count = count + 1
     print(foodCircle)
     return jsonify({'food':foodCircle})
