@@ -18,6 +18,8 @@ print(app.config['DB_URL'] + '/' + 'food' + '/add' + str(3))
 
 height = 250
 width = 250
+
+maxFood = 100
 count = 1
 
 @app.route('/')
@@ -45,6 +47,7 @@ def update_object():
 @app.route('/get_pi_food', methods=['GET'])
 def get_pi_food():
     global count
+    global maxFood
     x = float(request.args.get('x'))
     z = float(request.args.get('z'))
     print('Getting pi food!', x, z)
@@ -55,9 +58,8 @@ def get_pi_food():
     for i in range(size):
         foodCircle.append({'x': x + (np.sin(np.deg2rad(360 * i /size)) * 10),
                            'z': z + (np.cos(np.deg2rad(360 * i /size)) * 10),
-                           'id': count + 100})
+                           'id': count + maxFood})
         count = count + 1
-    # d = {'x': x , 'z': z }
     print(foodCircle)
     return jsonify({'food':foodCircle})
 
